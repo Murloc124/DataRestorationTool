@@ -34,6 +34,8 @@
             this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsb_LoadAudit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsb_RestoreData = new System.Windows.Forms.ToolStripButton();
             this.combo_Tables = new System.Windows.Forms.ComboBox();
             this.label_Table = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -46,27 +48,30 @@
             this.dataGrid_DeletedRecords = new System.Windows.Forms.DataGridView();
             this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.dataGrid_Details = new System.Windows.Forms.DataGridView();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletionDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletedByDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.auditItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dataGrid_Details = new System.Windows.Forms.DataGridView();
             this.fieldNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletedFieldBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsb_RestoreData = new System.Windows.Forms.ToolStripButton();
             this.toolStripMenu.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid_DeletedRecords)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.auditItemBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid_Details)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.auditItemBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deletedFieldBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,12 +106,27 @@
             // tsb_LoadAudit
             // 
             this.tsb_LoadAudit.Enabled = false;
-            this.tsb_LoadAudit.Image = ((System.Drawing.Image)(resources.GetObject("tsb_LoadAudit.Image")));
+            this.tsb_LoadAudit.Image = global::DataRestorationTool.Properties.Resources.Load;
             this.tsb_LoadAudit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_LoadAudit.Name = "tsb_LoadAudit";
             this.tsb_LoadAudit.Size = new System.Drawing.Size(149, 28);
             this.tsb_LoadAudit.Text = "Load Deleted Records";
             this.tsb_LoadAudit.Click += new System.EventHandler(this.tsb_LoadAudit_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            // 
+            // tsb_RestoreData
+            // 
+            this.tsb_RestoreData.Enabled = false;
+            this.tsb_RestoreData.Image = global::DataRestorationTool.Properties.Resources.Restore;
+            this.tsb_RestoreData.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_RestoreData.Name = "tsb_RestoreData";
+            this.tsb_RestoreData.Size = new System.Drawing.Size(148, 28);
+            this.tsb_RestoreData.Text = "Restore Selected Data";
+            this.tsb_RestoreData.Click += new System.EventHandler(this.tsb_RestoreData_Click);
             // 
             // combo_Tables
             // 
@@ -215,11 +235,12 @@
             this.deletionDateDataGridViewTextBoxColumn,
             this.deletedByDataGridViewTextBoxColumn});
             this.dataGrid_DeletedRecords.DataSource = this.auditItemBindingSource;
-            this.dataGrid_DeletedRecords.Location = new System.Drawing.Point(0, 1);
+            this.dataGrid_DeletedRecords.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGrid_DeletedRecords.Location = new System.Drawing.Point(0, 0);
             this.dataGrid_DeletedRecords.Name = "dataGrid_DeletedRecords";
             this.dataGrid_DeletedRecords.ReadOnly = true;
             this.dataGrid_DeletedRecords.RowHeadersVisible = false;
-            this.dataGrid_DeletedRecords.Size = new System.Drawing.Size(586, 497);
+            this.dataGrid_DeletedRecords.Size = new System.Drawing.Size(610, 498);
             this.dataGrid_DeletedRecords.TabIndex = 9;
             this.dataGrid_DeletedRecords.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_DeletedRecords_CellContentClick);
             // 
@@ -240,6 +261,66 @@
             this.nameDataGridViewTextBoxColumn.ReadOnly = true;
             this.nameDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.nameDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 31);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.groupBox2);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+            this.splitContainer1.Size = new System.Drawing.Size(1212, 600);
+            this.splitContainer1.SplitterDistance = 100;
+            this.splitContainer1.SplitterWidth = 2;
+            this.splitContainer1.TabIndex = 10;
+            // 
+            // dataGrid_Details
+            // 
+            this.dataGrid_Details.AllowUserToAddRows = false;
+            this.dataGrid_Details.AllowUserToDeleteRows = false;
+            this.dataGrid_Details.AutoGenerateColumns = false;
+            this.dataGrid_Details.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGrid_Details.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGrid_Details.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGrid_Details.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.fieldNameDataGridViewTextBoxColumn,
+            this.valueDataGridViewTextBoxColumn});
+            this.dataGrid_Details.DataSource = this.deletedFieldBindingSource;
+            this.dataGrid_Details.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGrid_Details.Location = new System.Drawing.Point(0, 0);
+            this.dataGrid_Details.Name = "dataGrid_Details";
+            this.dataGrid_Details.ReadOnly = true;
+            this.dataGrid_Details.RowHeadersVisible = false;
+            this.dataGrid_Details.Size = new System.Drawing.Size(598, 498);
+            this.dataGrid_Details.TabIndex = 10;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.IsSplitterFixed = true;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(1);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.dataGrid_DeletedRecords);
+            this.splitContainer2.Panel1MinSize = 601;
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.dataGrid_Details);
+            this.splitContainer2.Size = new System.Drawing.Size(1212, 498);
+            this.splitContainer2.SplitterDistance = 610;
+            this.splitContainer2.TabIndex = 11;
             // 
             // tableDataGridViewTextBoxColumn
             // 
@@ -269,45 +350,6 @@
             // 
             this.auditItemBindingSource.DataSource = typeof(DataRestorationTool.Model.AuditItem);
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Location = new System.Drawing.Point(3, 26);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
-            this.splitContainer1.Panel1.Controls.Add(this.groupBox2);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.dataGrid_Details);
-            this.splitContainer1.Panel2.Controls.Add(this.dataGrid_DeletedRecords);
-            this.splitContainer1.Size = new System.Drawing.Size(1200, 600);
-            this.splitContainer1.SplitterDistance = 100;
-            this.splitContainer1.SplitterWidth = 2;
-            this.splitContainer1.TabIndex = 10;
-            // 
-            // dataGrid_Details
-            // 
-            this.dataGrid_Details.AllowUserToAddRows = false;
-            this.dataGrid_Details.AllowUserToDeleteRows = false;
-            this.dataGrid_Details.AutoGenerateColumns = false;
-            this.dataGrid_Details.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGrid_Details.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.dataGrid_Details.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid_Details.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.fieldNameDataGridViewTextBoxColumn,
-            this.valueDataGridViewTextBoxColumn});
-            this.dataGrid_Details.DataSource = this.deletedFieldBindingSource;
-            this.dataGrid_Details.Location = new System.Drawing.Point(593, 1);
-            this.dataGrid_Details.Name = "dataGrid_Details";
-            this.dataGrid_Details.ReadOnly = true;
-            this.dataGrid_Details.RowHeadersVisible = false;
-            this.dataGrid_Details.Size = new System.Drawing.Size(604, 497);
-            this.dataGrid_Details.TabIndex = 10;
-            // 
             // fieldNameDataGridViewTextBoxColumn
             // 
             this.fieldNameDataGridViewTextBoxColumn.DataPropertyName = "FieldName";
@@ -327,21 +369,6 @@
             // 
             this.deletedFieldBindingSource.DataSource = typeof(DataRestorationTool.Model.DeletedField);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
-            // 
-            // tsb_RestoreData
-            // 
-            this.tsb_RestoreData.Enabled = false;
-            this.tsb_RestoreData.Image = ((System.Drawing.Image)(resources.GetObject("tsb_RestoreData.Image")));
-            this.tsb_RestoreData.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsb_RestoreData.Name = "tsb_RestoreData";
-            this.tsb_RestoreData.Size = new System.Drawing.Size(148, 28);
-            this.tsb_RestoreData.Text = "Restore Selected Data";
-            this.tsb_RestoreData.Click += new System.EventHandler(this.tsb_RestoreData_Click);
-            // 
             // MyPluginControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -360,12 +387,16 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid_DeletedRecords)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.auditItemBindingSource)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid_Details)).EndInit();
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.auditItemBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deletedFieldBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -400,5 +431,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn deletedByDataGridViewTextBoxColumn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tsb_RestoreData;
+        private System.Windows.Forms.SplitContainer splitContainer2;
     }
 }

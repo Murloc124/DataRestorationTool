@@ -257,7 +257,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -276,6 +275,12 @@
     <None Include="Properties\DataSources\DataRestorationTool.Model.AuditItem.datasource" />
     <None Include="Properties\DataSources\DataRestorationTool.Model.DeletedField.datasource" />
     <None Include="Resources\C3K32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Load.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Restore.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

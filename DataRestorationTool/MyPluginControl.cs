@@ -11,17 +11,24 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using XrmToolBox.Extensibility;
+using XrmToolBox.Extensibility.Interfaces;
 
 namespace DataRestorationTool
 {
-    public partial class MyPluginControl : PluginControlBase
+    public partial class MyPluginControl : PluginControlBase, IGitHubPlugin, IPayPalPlugin
     {
         #region Private Properties
         private List<EntityMetadata> tableMetaDataList;
         #endregion
 
         #region Public Proprties
+        // Github Properties
+        public string RepositoryName => "https://github.com/Murloc124/DataRestorationTool";
+        public string UserName => "Murloc124";
 
+        // PayPal Properties
+        public string DonationDescription => "Help us improve thist tool!";
+        string IPayPalPlugin.EmailAccount => "dominica3000@gmail.com";
         #endregion
 
         public MyPluginControl()
