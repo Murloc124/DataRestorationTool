@@ -23,7 +23,7 @@ namespace DataRestorationTool
 
         #region Public Proprties
         // Github Properties
-        public string RepositoryName => "https://github.com/Murloc124/DataRestorationTool";
+        public string RepositoryName => "DataRestorationTool";
         public string UserName => "Murloc124";
 
         // PayPal Properties
