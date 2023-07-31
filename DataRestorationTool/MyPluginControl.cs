@@ -137,8 +137,8 @@ namespace DataRestorationTool
 
             WorkAsync(new WorkAsyncInfo
             {
-                Message = "Loading Tables with Auditing enabled..",
-                Work = (w, ev) =>
+                Message = $"Loading Tables with Auditing enabled...",
+                Work = (w, e) =>
                 {
                     var metaDataResponse = (RetrieveAllEntitiesResponse)Service.Execute(new RetrieveAllEntitiesRequest { EntityFilters = EntityFilters.Attributes });
                     tableMetaDataList = new List<EntityMetadata>();
@@ -152,7 +152,7 @@ namespace DataRestorationTool
                         }
                     }
 
-                    ev.Result = dataResultTables.OrderBy(_ => _.Item2).ToList();
+                    e.Result = dataResultTables.OrderBy(_ => _.Item2).ToList();
                 },
                 PostWorkCallBack = ev =>
                 {
@@ -171,12 +171,12 @@ namespace DataRestorationTool
             WorkAsync(new WorkAsyncInfo
             {
                 Message = "Loading Deleted Records..",
-                Work = (w, ev) =>
+                Work = (w, e) =>
                 {
                     var result = new List<AuditItem>();
-                    var queryResult = Service.RetrieveMultiple(BuildAuditQuery(selectedTableValue));
+                    var queryResult = ExecutePagedQuery(BuildAuditQuery(selectedTableValue));
 
-                    foreach (var item in queryResult.Entities)
+                    foreach (var item in queryResult)
                     {
                         var auditDetailResp = (RetrieveAuditDetailsResponse)Service.Execute(new RetrieveAuditDetailsRequest { AuditId = item.Id });
 
@@ -197,17 +197,17 @@ namespace DataRestorationTool
                         });
                     }
 
-                    ev.Result = result.OrderByDescending(_ => _.DeletionDate).ToList();
+                    e.Result = result.OrderByDescending(_ => _.DeletionDate).ToList();
                 },
-                PostWorkCallBack = ev =>
+                PostWorkCallBack = e =>
                 {
-                    if (((List<AuditItem>)ev.Result).Count == 0)
+                    if (((List<AuditItem>)e.Result).Count == 0)
                     {
                         MessageBox.Show($"No deleted records for table {selectedTable.Item2} during the selected period.");
                         dataGrid_DeletedRecords.DataSource = null;
                     }
                     else
-                        dataGrid_DeletedRecords.DataSource = ev.Result;
+                        dataGrid_DeletedRecords.DataSource = e.Result;
 
                     EnableControls();
                 },
@@ -258,6 +258,10 @@ namespace DataRestorationTool
 
         private void RestoreData()
         {
+            ExecuteMultipleResponse resp;
+            bool byPassPlgn = cb_PlgnExec.Checked;
+            bool byPassFlow = cb_PAFlow.Checked;
+
             WorkAsync(new WorkAsyncInfo
             {
                 Message = "Restoring Deleted Data..",
@@ -265,17 +269,47 @@ namespace DataRestorationTool
                 {
                     try
                     {
-                        foreach(DataGridViewRow row in dataGrid_DeletedRecords.Rows)
+                        var emp = IntializeExecuteMultipleRequest();
+
+                        for (int c = 0; c < dataGrid_DeletedRecords.Rows.Count; c++)
                         {
+                            var row = dataGrid_DeletedRecords.Rows[c];
                             var checkBoxCell = (DataGridViewCheckBoxCell)row.Cells[0];
+
                             if (checkBoxCell.Value != null && (bool)checkBoxCell.Value)
                             {
                                 var entityToCreate = ((AuditItem)row.DataBoundItem).AuditDetail.OldValue;
                                 entityToCreate.Attributes.Remove("statecode");
                                 entityToCreate.Attributes.Remove("statuscode");
-                                Service.Create(entityToCreate);
+
+                                var req = new CreateRequest { Target = entityToCreate };
+
+                                if (byPassPlgn) req.Parameters.Add("BypassCustomPluginExecution", true);
+                                if (byPassFlow) req.Parameters.Add("SuppressCallbackRegistrationExpanderJob", true);
+
+                                emp.Requests.Add(req);
+
+                                if (emp.Requests.Count >= 250)
+                                {
+                                    resp = (ExecuteMultipleResponse)Service.Execute(emp);
+
+                                    if (resp.Responses.Count > 0)
+                                    {
+                                        throw new Exception(resp.Responses.First().Fault.Message);
+                                    }
+
+                                    emp = IntializeExecuteMultipleRequest();
+                                }
                             }
                         }
+
+                        resp = (ExecuteMultipleResponse)Service.Execute(emp);
+
+                        if (resp.Responses.Count > 0)
+                        {
+                            throw new Exception(resp.Responses.First().Fault.Message);
+                        }
+
                         e.Result = true;
                     }
                     catch (Exception ex)
@@ -293,6 +327,42 @@ namespace DataRestorationTool
                 }, IsCancelable = true
             });
         }
+
+        private ExecuteMultipleRequest IntializeExecuteMultipleRequest() =>
+            new ExecuteMultipleRequest
+            {
+                Settings = new ExecuteMultipleSettings
+                {
+                    ContinueOnError = false,
+                    ReturnResponses = false,
+                },
+                Requests = new OrganizationRequestCollection(),
+            };
+
+        private List<Entity> ExecutePagedQuery(QueryExpression q)
+        {
+            int pageNumber = 1;
+            string pagingCookie = null;
+
+            DataCollection<Entity> result = null;
+            while (true)
+            {
+                q.PageInfo = new PagingInfo() { Count = 500, PageNumber = pageNumber, PagingCookie = pagingCookie };
+                EntityCollection ec = Service.RetrieveMultiple(q);
+
+                if (object.ReferenceEquals(result, null)) result = ec.Entities;
+                else result.AddRange(ec.Entities);
+
+                if (!ec.MoreRecords) break;
+                else
+                {
+                    pageNumber++;
+                    pagingCookie = ec.PagingCookie;
+                }
+            }
+
+            return result.ToList();
+        } 
         #endregion
 
         #region QueryExpressions

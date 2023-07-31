@@ -49,8 +49,14 @@
             this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewLinkColumn();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dataGrid_Details = new System.Windows.Forms.DataGridView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.dataGrid_Details = new System.Windows.Forms.DataGridView();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lbl_AdvSettings = new System.Windows.Forms.Label();
+            this.lbl_ByPassPlgn = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cb_PlgnExec = new System.Windows.Forms.CheckBox();
+            this.cb_PAFlow = new System.Windows.Forms.CheckBox();
             this.tableDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletionDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletedByDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,11 +72,12 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid_Details)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGrid_Details)).BeginInit();
+            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.auditItemBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deletedFieldBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -86,6 +93,7 @@
             this.tsb_RestoreData});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
+            this.toolStripMenu.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStripMenu.Size = new System.Drawing.Size(1212, 31);
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
@@ -152,9 +160,9 @@
             this.groupBox1.Controls.Add(this.label_Table);
             this.groupBox1.Controls.Add(this.combo_Tables);
             this.groupBox1.Location = new System.Drawing.Point(1, 1);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(1);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(1);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.groupBox1.Size = new System.Drawing.Size(283, 98);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
@@ -167,9 +175,9 @@
             this.groupBox2.Controls.Add(this.dateTime_From);
             this.groupBox2.Controls.Add(this.label_DateRange);
             this.groupBox2.Location = new System.Drawing.Point(286, 1);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(1);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(1);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.groupBox2.Size = new System.Drawing.Size(169, 98);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
@@ -240,7 +248,8 @@
             this.dataGrid_DeletedRecords.Name = "dataGrid_DeletedRecords";
             this.dataGrid_DeletedRecords.ReadOnly = true;
             this.dataGrid_DeletedRecords.RowHeadersVisible = false;
-            this.dataGrid_DeletedRecords.Size = new System.Drawing.Size(610, 498);
+            this.dataGrid_DeletedRecords.RowHeadersWidth = 102;
+            this.dataGrid_DeletedRecords.Size = new System.Drawing.Size(610, 499);
             this.dataGrid_DeletedRecords.TabIndex = 9;
             this.dataGrid_DeletedRecords.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_DeletedRecords_CellContentClick);
             // 
@@ -248,6 +257,7 @@
             // 
             this.Select.FillWeight = 20F;
             this.Select.HeaderText = "";
+            this.Select.MinimumWidth = 12;
             this.Select.Name = "Select";
             this.Select.ReadOnly = true;
             this.Select.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -257,6 +267,7 @@
             this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
             this.nameDataGridViewTextBoxColumn.FillWeight = 200F;
             this.nameDataGridViewTextBoxColumn.HeaderText = "Record";
+            this.nameDataGridViewTextBoxColumn.MinimumWidth = 12;
             this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
             this.nameDataGridViewTextBoxColumn.ReadOnly = true;
             this.nameDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -271,6 +282,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.groupBox3);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox2);
             // 
@@ -278,9 +290,29 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(1212, 600);
-            this.splitContainer1.SplitterDistance = 100;
+            this.splitContainer1.SplitterDistance = 99;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 10;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.IsSplitterFixed = true;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.dataGrid_DeletedRecords);
+            this.splitContainer2.Panel1MinSize = 601;
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.dataGrid_Details);
+            this.splitContainer2.Size = new System.Drawing.Size(1212, 499);
+            this.splitContainer2.SplitterDistance = 610;
+            this.splitContainer2.TabIndex = 11;
             // 
             // dataGrid_Details
             // 
@@ -299,34 +331,80 @@
             this.dataGrid_Details.Name = "dataGrid_Details";
             this.dataGrid_Details.ReadOnly = true;
             this.dataGrid_Details.RowHeadersVisible = false;
-            this.dataGrid_Details.Size = new System.Drawing.Size(598, 498);
+            this.dataGrid_Details.RowHeadersWidth = 102;
+            this.dataGrid_Details.Size = new System.Drawing.Size(598, 499);
             this.dataGrid_Details.TabIndex = 10;
             // 
-            // splitContainer2
+            // groupBox3
             // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.IsSplitterFixed = true;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(1);
-            this.splitContainer2.Name = "splitContainer2";
+            this.groupBox3.Controls.Add(this.cb_PAFlow);
+            this.groupBox3.Controls.Add(this.cb_PlgnExec);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.lbl_ByPassPlgn);
+            this.groupBox3.Controls.Add(this.lbl_AdvSettings);
+            this.groupBox3.Location = new System.Drawing.Point(460, 1);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(1);
+            this.groupBox3.Size = new System.Drawing.Size(200, 100);
+            this.groupBox3.TabIndex = 9;
+            this.groupBox3.TabStop = false;
             // 
-            // splitContainer2.Panel1
+            // lbl_AdvSettings
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.dataGrid_DeletedRecords);
-            this.splitContainer2.Panel1MinSize = 601;
+            this.lbl_AdvSettings.AutoSize = true;
+            this.lbl_AdvSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_AdvSettings.Location = new System.Drawing.Point(5, 15);
+            this.lbl_AdvSettings.Name = "lbl_AdvSettings";
+            this.lbl_AdvSettings.Size = new System.Drawing.Size(114, 13);
+            this.lbl_AdvSettings.TabIndex = 0;
+            this.lbl_AdvSettings.Text = "Advanced Settings";
             // 
-            // splitContainer2.Panel2
+            // lbl_ByPassPlgn
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.dataGrid_Details);
-            this.splitContainer2.Size = new System.Drawing.Size(1212, 498);
-            this.splitContainer2.SplitterDistance = 610;
-            this.splitContainer2.TabIndex = 11;
+            this.lbl_ByPassPlgn.AutoSize = true;
+            this.lbl_ByPassPlgn.Location = new System.Drawing.Point(8, 34);
+            this.lbl_ByPassPlgn.Name = "lbl_ByPassPlgn";
+            this.lbl_ByPassPlgn.Size = new System.Drawing.Size(162, 13);
+            this.lbl_ByPassPlgn.TabIndex = 1;
+            this.lbl_ByPassPlgn.Text = "ByPass Custom Plugin Execution";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 60);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(148, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "ByPass Power Automate Flow";
+            // 
+            // cb_PlgnExec
+            // 
+            this.cb_PlgnExec.AutoSize = true;
+            this.cb_PlgnExec.Checked = true;
+            this.cb_PlgnExec.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_PlgnExec.Location = new System.Drawing.Point(175, 35);
+            this.cb_PlgnExec.Name = "cb_PlgnExec";
+            this.cb_PlgnExec.Size = new System.Drawing.Size(15, 14);
+            this.cb_PlgnExec.TabIndex = 3;
+            this.cb_PlgnExec.UseVisualStyleBackColor = true;
+            // 
+            // cb_PAFlow
+            // 
+            this.cb_PAFlow.AutoSize = true;
+            this.cb_PAFlow.Checked = true;
+            this.cb_PAFlow.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_PAFlow.Location = new System.Drawing.Point(175, 60);
+            this.cb_PAFlow.Name = "cb_PAFlow";
+            this.cb_PAFlow.Size = new System.Drawing.Size(15, 14);
+            this.cb_PAFlow.TabIndex = 4;
+            this.cb_PAFlow.UseVisualStyleBackColor = true;
             // 
             // tableDataGridViewTextBoxColumn
             // 
             this.tableDataGridViewTextBoxColumn.DataPropertyName = "Table";
             this.tableDataGridViewTextBoxColumn.FillWeight = 90F;
             this.tableDataGridViewTextBoxColumn.HeaderText = "Table";
+            this.tableDataGridViewTextBoxColumn.MinimumWidth = 12;
             this.tableDataGridViewTextBoxColumn.Name = "tableDataGridViewTextBoxColumn";
             this.tableDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -335,6 +413,7 @@
             this.deletionDateDataGridViewTextBoxColumn.DataPropertyName = "DeletionDate";
             this.deletionDateDataGridViewTextBoxColumn.FillWeight = 90F;
             this.deletionDateDataGridViewTextBoxColumn.HeaderText = "Deleted On";
+            this.deletionDateDataGridViewTextBoxColumn.MinimumWidth = 12;
             this.deletionDateDataGridViewTextBoxColumn.Name = "deletionDateDataGridViewTextBoxColumn";
             this.deletionDateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -343,6 +422,7 @@
             this.deletedByDataGridViewTextBoxColumn.DataPropertyName = "DeletedBy";
             this.deletedByDataGridViewTextBoxColumn.FillWeight = 90F;
             this.deletedByDataGridViewTextBoxColumn.HeaderText = "Deleted By";
+            this.deletedByDataGridViewTextBoxColumn.MinimumWidth = 12;
             this.deletedByDataGridViewTextBoxColumn.Name = "deletedByDataGridViewTextBoxColumn";
             this.deletedByDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -355,6 +435,7 @@
             this.fieldNameDataGridViewTextBoxColumn.DataPropertyName = "FieldName";
             this.fieldNameDataGridViewTextBoxColumn.FillWeight = 30F;
             this.fieldNameDataGridViewTextBoxColumn.HeaderText = "Field";
+            this.fieldNameDataGridViewTextBoxColumn.MinimumWidth = 12;
             this.fieldNameDataGridViewTextBoxColumn.Name = "fieldNameDataGridViewTextBoxColumn";
             this.fieldNameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -362,6 +443,7 @@
             // 
             this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
             this.valueDataGridViewTextBoxColumn.HeaderText = "Value";
+            this.valueDataGridViewTextBoxColumn.MinimumWidth = 12;
             this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
             this.valueDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -391,11 +473,13 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid_Details)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGrid_Details)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.auditItemBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deletedFieldBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -432,5 +516,11 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tsb_RestoreData;
         private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label lbl_AdvSettings;
+        private System.Windows.Forms.Label lbl_ByPassPlgn;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox cb_PlgnExec;
+        private System.Windows.Forms.CheckBox cb_PAFlow;
     }
 }
