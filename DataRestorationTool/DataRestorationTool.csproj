@@ -232,16 +232,13 @@
       <HintPath>..\packages\DockPanelSuite.ThemeVS2015.3.0.6\lib\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2015.dll</HintPath>
     </Reference>
     <Reference Include="XrmToolBox, Version=1.2023.6.65, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XrmToolBoxPackage.1.2023.7.65\lib\net462\XrmToolBox.exe</HintPath>
+      <HintPath>..\packages\XrmToolBoxPackage.1.2023.6.65\lib\net462\XrmToolBox.exe</HintPath>
     </Reference>
     <Reference Include="XrmToolBox.Extensibility, Version=1.2023.6.65, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XrmToolBoxPackage.1.2023.7.65\lib\net462\XrmToolBox.Extensibility.dll</HintPath>
-    </Reference>
-    <Reference Include="XrmToolBox.PluginsStore, Version=1.2023.1.63, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XrmToolBoxPackage.1.2023.7.65\lib\net462\XrmToolBox.PluginsStore.dll</HintPath>
+      <HintPath>..\packages\XrmToolBoxPackage.1.2023.6.65\lib\net462\XrmToolBox.Extensibility.dll</HintPath>
     </Reference>
     <Reference Include="XrmToolBox.ToolLibrary, Version=1.2023.6.65, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XrmToolBoxPackage.1.2023.7.65\lib\net462\XrmToolBox.ToolLibrary.dll</HintPath>
+      <HintPath>..\packages\XrmToolBoxPackage.1.2023.6.65\lib\net462\XrmToolBox.ToolLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
