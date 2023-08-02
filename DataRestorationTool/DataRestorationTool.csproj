@@ -244,6 +244,7 @@
   <ItemGroup>
     <Compile Include="Model\AuditItem.cs" />
     <Compile Include="Model\DeletedField.cs" />
+    <Compile Include="Model\Settings.cs" />
     <Compile Include="MyPlugin.cs" />
     <Compile Include="MyPluginControl.cs">
       <SubType>UserControl</SubType>

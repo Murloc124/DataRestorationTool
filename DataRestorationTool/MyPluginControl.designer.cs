@@ -1,4 +1,6 @@
-﻿namespace DataRestorationTool
+﻿using System.Windows.Forms;
+
+namespace DataRestorationTool
 {
     partial class MyPluginControl
     {
@@ -39,6 +41,8 @@
             this.combo_Tables = new System.Windows.Forms.ComboBox();
             this.label_Table = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_DeselectAll = new System.Windows.Forms.Button();
+            this.btn_SelectAll = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label_DateTo = new System.Windows.Forms.Label();
             this.dateTime_To = new System.Windows.Forms.DateTimePicker();
@@ -49,14 +53,18 @@
             this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewLinkColumn();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cb_ContinueOnError = new System.Windows.Forms.CheckBox();
+            this.lbl_ContinueOnError = new System.Windows.Forms.Label();
+            this.cb_ReuseGUID = new System.Windows.Forms.CheckBox();
+            this.lbl_ReuseRecordID = new System.Windows.Forms.Label();
+            this.cb_PAFlow = new System.Windows.Forms.CheckBox();
+            this.cb_PlgnExec = new System.Windows.Forms.CheckBox();
+            this.lbl_ByPassPA = new System.Windows.Forms.Label();
+            this.lbl_ByPassPlgn = new System.Windows.Forms.Label();
+            this.lbl_AdvSettings = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGrid_Details = new System.Windows.Forms.DataGridView();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lbl_AdvSettings = new System.Windows.Forms.Label();
-            this.lbl_ByPassPlgn = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cb_PlgnExec = new System.Windows.Forms.CheckBox();
-            this.cb_PAFlow = new System.Windows.Forms.CheckBox();
             this.tableDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletionDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletedByDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -72,12 +80,12 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid_Details)).BeginInit();
-            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.auditItemBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deletedFieldBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -141,7 +149,7 @@
             this.combo_Tables.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combo_Tables.Enabled = false;
             this.combo_Tables.FormattingEnabled = true;
-            this.combo_Tables.Location = new System.Drawing.Point(79, 13);
+            this.combo_Tables.Location = new System.Drawing.Point(80, 10);
             this.combo_Tables.Name = "combo_Tables";
             this.combo_Tables.Size = new System.Drawing.Size(200, 21);
             this.combo_Tables.TabIndex = 5;
@@ -149,7 +157,7 @@
             // label_Table
             // 
             this.label_Table.AutoSize = true;
-            this.label_Table.Location = new System.Drawing.Point(6, 16);
+            this.label_Table.Location = new System.Drawing.Point(5, 15);
             this.label_Table.Name = "label_Table";
             this.label_Table.Size = new System.Drawing.Size(67, 13);
             this.label_Table.TabIndex = 6;
@@ -157,15 +165,39 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btn_DeselectAll);
+            this.groupBox1.Controls.Add(this.btn_SelectAll);
             this.groupBox1.Controls.Add(this.label_Table);
             this.groupBox1.Controls.Add(this.combo_Tables);
             this.groupBox1.Location = new System.Drawing.Point(1, 1);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(1);
             this.groupBox1.Size = new System.Drawing.Size(283, 98);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
+            // 
+            // btn_DeselectAll
+            // 
+            this.btn_DeselectAll.Enabled = false;
+            this.btn_DeselectAll.Location = new System.Drawing.Point(90, 70);
+            this.btn_DeselectAll.Name = "btn_DeselectAll";
+            this.btn_DeselectAll.Size = new System.Drawing.Size(75, 25);
+            this.btn_DeselectAll.TabIndex = 8;
+            this.btn_DeselectAll.Text = "Deselect All";
+            this.btn_DeselectAll.UseVisualStyleBackColor = true;
+            this.btn_DeselectAll.Click += new System.EventHandler(this.btn_DeselectAll_Click);
+            // 
+            // btn_SelectAll
+            // 
+            this.btn_SelectAll.Enabled = false;
+            this.btn_SelectAll.Location = new System.Drawing.Point(10, 70);
+            this.btn_SelectAll.Name = "btn_SelectAll";
+            this.btn_SelectAll.Size = new System.Drawing.Size(75, 25);
+            this.btn_SelectAll.TabIndex = 7;
+            this.btn_SelectAll.Text = "Select All";
+            this.btn_SelectAll.UseVisualStyleBackColor = true;
+            this.btn_SelectAll.Click += new System.EventHandler(this.btn_SelectAll_Click);
             // 
             // groupBox2
             // 
@@ -175,9 +207,9 @@
             this.groupBox2.Controls.Add(this.dateTime_From);
             this.groupBox2.Controls.Add(this.label_DateRange);
             this.groupBox2.Location = new System.Drawing.Point(286, 1);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(1);
             this.groupBox2.Size = new System.Drawing.Size(169, 98);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
@@ -185,7 +217,7 @@
             // label_DateTo
             // 
             this.label_DateTo.AutoSize = true;
-            this.label_DateTo.Location = new System.Drawing.Point(15, 60);
+            this.label_DateTo.Location = new System.Drawing.Point(15, 65);
             this.label_DateTo.Name = "label_DateTo";
             this.label_DateTo.Size = new System.Drawing.Size(20, 13);
             this.label_DateTo.TabIndex = 10;
@@ -195,7 +227,7 @@
             // 
             this.dateTime_To.Enabled = false;
             this.dateTime_To.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTime_To.Location = new System.Drawing.Point(51, 57);
+            this.dateTime_To.Location = new System.Drawing.Point(50, 62);
             this.dateTime_To.Name = "dateTime_To";
             this.dateTime_To.Size = new System.Drawing.Size(100, 20);
             this.dateTime_To.TabIndex = 2;
@@ -203,7 +235,7 @@
             // label_DateFrom
             // 
             this.label_DateFrom.AutoSize = true;
-            this.label_DateFrom.Location = new System.Drawing.Point(15, 34);
+            this.label_DateFrom.Location = new System.Drawing.Point(15, 40);
             this.label_DateFrom.Name = "label_DateFrom";
             this.label_DateFrom.Size = new System.Drawing.Size(30, 13);
             this.label_DateFrom.TabIndex = 9;
@@ -213,7 +245,7 @@
             // 
             this.dateTime_From.Enabled = false;
             this.dateTime_From.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTime_From.Location = new System.Drawing.Point(51, 31);
+            this.dateTime_From.Location = new System.Drawing.Point(50, 37);
             this.dateTime_From.Name = "dateTime_From";
             this.dateTime_From.Size = new System.Drawing.Size(100, 20);
             this.dateTime_From.TabIndex = 1;
@@ -221,10 +253,10 @@
             // label_DateRange
             // 
             this.label_DateRange.AutoSize = true;
-            this.label_DateRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_DateRange.Location = new System.Drawing.Point(13, 14);
+            this.label_DateRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_DateRange.Location = new System.Drawing.Point(10, 15);
             this.label_DateRange.Name = "label_DateRange";
-            this.label_DateRange.Size = new System.Drawing.Size(75, 13);
+            this.label_DateRange.Size = new System.Drawing.Size(94, 17);
             this.label_DateRange.TabIndex = 0;
             this.label_DateRange.Text = "Date Range";
             // 
@@ -294,12 +326,116 @@
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 10;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.cb_ContinueOnError);
+            this.groupBox3.Controls.Add(this.lbl_ContinueOnError);
+            this.groupBox3.Controls.Add(this.cb_ReuseGUID);
+            this.groupBox3.Controls.Add(this.lbl_ReuseRecordID);
+            this.groupBox3.Controls.Add(this.cb_PAFlow);
+            this.groupBox3.Controls.Add(this.cb_PlgnExec);
+            this.groupBox3.Controls.Add(this.lbl_ByPassPA);
+            this.groupBox3.Controls.Add(this.lbl_ByPassPlgn);
+            this.groupBox3.Controls.Add(this.lbl_AdvSettings);
+            this.groupBox3.Location = new System.Drawing.Point(460, 1);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(1);
+            this.groupBox3.Size = new System.Drawing.Size(350, 98);
+            this.groupBox3.TabIndex = 9;
+            this.groupBox3.TabStop = false;
+            // 
+            // cb_ContinueOnError
+            // 
+            this.cb_ContinueOnError.AutoSize = true;
+            this.cb_ContinueOnError.Location = new System.Drawing.Point(315, 65);
+            this.cb_ContinueOnError.Name = "cb_ContinueOnError";
+            this.cb_ContinueOnError.Size = new System.Drawing.Size(15, 14);
+            this.cb_ContinueOnError.TabIndex = 8;
+            this.cb_ContinueOnError.UseVisualStyleBackColor = true;
+            // 
+            // lbl_ContinueOnError
+            // 
+            this.lbl_ContinueOnError.AutoSize = true;
+            this.lbl_ContinueOnError.Location = new System.Drawing.Point(205, 65);
+            this.lbl_ContinueOnError.Name = "lbl_ContinueOnError";
+            this.lbl_ContinueOnError.Size = new System.Drawing.Size(88, 13);
+            this.lbl_ContinueOnError.TabIndex = 7;
+            this.lbl_ContinueOnError.Text = "Continue on error";
+            // 
+            // cb_ReuseGUID
+            // 
+            this.cb_ReuseGUID.AutoSize = true;
+            this.cb_ReuseGUID.Location = new System.Drawing.Point(315, 40);
+            this.cb_ReuseGUID.Name = "cb_ReuseGUID";
+            this.cb_ReuseGUID.Size = new System.Drawing.Size(15, 14);
+            this.cb_ReuseGUID.TabIndex = 6;
+            this.cb_ReuseGUID.UseVisualStyleBackColor = true;
+            // 
+            // lbl_ReuseRecordID
+            // 
+            this.lbl_ReuseRecordID.AutoSize = true;
+            this.lbl_ReuseRecordID.Location = new System.Drawing.Point(205, 40);
+            this.lbl_ReuseRecordID.Name = "lbl_ReuseRecordID";
+            this.lbl_ReuseRecordID.Size = new System.Drawing.Size(106, 13);
+            this.lbl_ReuseRecordID.TabIndex = 5;
+            this.lbl_ReuseRecordID.Text = "Reuse deleted GUID";
+            // 
+            // cb_PAFlow
+            // 
+            this.cb_PAFlow.AutoSize = true;
+            this.cb_PAFlow.Checked = true;
+            this.cb_PAFlow.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_PAFlow.Location = new System.Drawing.Point(175, 65);
+            this.cb_PAFlow.Name = "cb_PAFlow";
+            this.cb_PAFlow.Size = new System.Drawing.Size(15, 14);
+            this.cb_PAFlow.TabIndex = 4;
+            this.cb_PAFlow.UseVisualStyleBackColor = true;
+            // 
+            // cb_PlgnExec
+            // 
+            this.cb_PlgnExec.AutoSize = true;
+            this.cb_PlgnExec.Checked = true;
+            this.cb_PlgnExec.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_PlgnExec.Location = new System.Drawing.Point(175, 40);
+            this.cb_PlgnExec.Name = "cb_PlgnExec";
+            this.cb_PlgnExec.Size = new System.Drawing.Size(15, 14);
+            this.cb_PlgnExec.TabIndex = 3;
+            this.cb_PlgnExec.UseVisualStyleBackColor = true;
+            // 
+            // lbl_ByPassPA
+            // 
+            this.lbl_ByPassPA.AutoSize = true;
+            this.lbl_ByPassPA.Location = new System.Drawing.Point(8, 65);
+            this.lbl_ByPassPA.Name = "lbl_ByPassPA";
+            this.lbl_ByPassPA.Size = new System.Drawing.Size(148, 13);
+            this.lbl_ByPassPA.TabIndex = 2;
+            this.lbl_ByPassPA.Text = "ByPass Power Automate Flow";
+            // 
+            // lbl_ByPassPlgn
+            // 
+            this.lbl_ByPassPlgn.AutoSize = true;
+            this.lbl_ByPassPlgn.Location = new System.Drawing.Point(8, 40);
+            this.lbl_ByPassPlgn.Name = "lbl_ByPassPlgn";
+            this.lbl_ByPassPlgn.Size = new System.Drawing.Size(162, 13);
+            this.lbl_ByPassPlgn.TabIndex = 1;
+            this.lbl_ByPassPlgn.Text = "ByPass Custom Plugin Execution";
+            // 
+            // lbl_AdvSettings
+            // 
+            this.lbl_AdvSettings.AutoSize = true;
+            this.lbl_AdvSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_AdvSettings.Location = new System.Drawing.Point(10, 15);
+            this.lbl_AdvSettings.Name = "lbl_AdvSettings";
+            this.lbl_AdvSettings.Size = new System.Drawing.Size(143, 17);
+            this.lbl_AdvSettings.TabIndex = 0;
+            this.lbl_AdvSettings.Text = "Advanced Settings";
+            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.IsSplitterFixed = true;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(1);
             this.splitContainer2.Name = "splitContainer2";
             // 
             // splitContainer2.Panel1
@@ -334,70 +470,6 @@
             this.dataGrid_Details.RowHeadersWidth = 102;
             this.dataGrid_Details.Size = new System.Drawing.Size(598, 499);
             this.dataGrid_Details.TabIndex = 10;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.cb_PAFlow);
-            this.groupBox3.Controls.Add(this.cb_PlgnExec);
-            this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Controls.Add(this.lbl_ByPassPlgn);
-            this.groupBox3.Controls.Add(this.lbl_AdvSettings);
-            this.groupBox3.Location = new System.Drawing.Point(460, 1);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox3.Size = new System.Drawing.Size(200, 100);
-            this.groupBox3.TabIndex = 9;
-            this.groupBox3.TabStop = false;
-            // 
-            // lbl_AdvSettings
-            // 
-            this.lbl_AdvSettings.AutoSize = true;
-            this.lbl_AdvSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_AdvSettings.Location = new System.Drawing.Point(5, 15);
-            this.lbl_AdvSettings.Name = "lbl_AdvSettings";
-            this.lbl_AdvSettings.Size = new System.Drawing.Size(114, 13);
-            this.lbl_AdvSettings.TabIndex = 0;
-            this.lbl_AdvSettings.Text = "Advanced Settings";
-            // 
-            // lbl_ByPassPlgn
-            // 
-            this.lbl_ByPassPlgn.AutoSize = true;
-            this.lbl_ByPassPlgn.Location = new System.Drawing.Point(8, 34);
-            this.lbl_ByPassPlgn.Name = "lbl_ByPassPlgn";
-            this.lbl_ByPassPlgn.Size = new System.Drawing.Size(162, 13);
-            this.lbl_ByPassPlgn.TabIndex = 1;
-            this.lbl_ByPassPlgn.Text = "ByPass Custom Plugin Execution";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 60);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(148, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "ByPass Power Automate Flow";
-            // 
-            // cb_PlgnExec
-            // 
-            this.cb_PlgnExec.AutoSize = true;
-            this.cb_PlgnExec.Checked = true;
-            this.cb_PlgnExec.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_PlgnExec.Location = new System.Drawing.Point(175, 35);
-            this.cb_PlgnExec.Name = "cb_PlgnExec";
-            this.cb_PlgnExec.Size = new System.Drawing.Size(15, 14);
-            this.cb_PlgnExec.TabIndex = 3;
-            this.cb_PlgnExec.UseVisualStyleBackColor = true;
-            // 
-            // cb_PAFlow
-            // 
-            this.cb_PAFlow.AutoSize = true;
-            this.cb_PAFlow.Checked = true;
-            this.cb_PAFlow.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_PAFlow.Location = new System.Drawing.Point(175, 60);
-            this.cb_PAFlow.Name = "cb_PAFlow";
-            this.cb_PAFlow.Size = new System.Drawing.Size(15, 14);
-            this.cb_PAFlow.TabIndex = 4;
-            this.cb_PAFlow.UseVisualStyleBackColor = true;
             // 
             // tableDataGridViewTextBoxColumn
             // 
@@ -473,13 +545,13 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid_Details)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.auditItemBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deletedFieldBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -519,8 +591,14 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label lbl_AdvSettings;
         private System.Windows.Forms.Label lbl_ByPassPlgn;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbl_ByPassPA;
         private System.Windows.Forms.CheckBox cb_PlgnExec;
         private System.Windows.Forms.CheckBox cb_PAFlow;
+        private System.Windows.Forms.Button btn_SelectAll;
+        private System.Windows.Forms.Button btn_DeselectAll;
+        private System.Windows.Forms.Label lbl_ReuseRecordID;
+        private System.Windows.Forms.CheckBox cb_ReuseGUID;
+        private System.Windows.Forms.Label lbl_ContinueOnError;
+        private System.Windows.Forms.CheckBox cb_ContinueOnError;
     }
 }

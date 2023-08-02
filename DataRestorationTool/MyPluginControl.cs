@@ -29,6 +29,8 @@ namespace DataRestorationTool
         // PayPal Properties
         public string DonationDescription => "Help us improve thist tool!";
         string IPayPalPlugin.EmailAccount => "dominica3000@gmail.com";
+
+        public Settings settings;
         #endregion
 
         public MyPluginControl()
@@ -38,14 +40,18 @@ namespace DataRestorationTool
             dateTime_To.Value = DateTime.Now;
         }
 
-
         #region Event Handling
         private void MyPluginControl_Load(object sender, EventArgs e)
         {
-        }
-
-        private void MyPluginControl_OnCloseTool(object sender, EventArgs e)
-        {
+            if (SettingsManager.Instance.TryLoad(typeof(MyPlugin), out settings))
+            {
+                cb_PlgnExec.Checked = settings.ByPassCustomPlugin;
+                cb_PAFlow.Checked = settings.ByPassPAFlow;
+                cb_ContinueOnError.Checked = settings.ContinueOnError;
+                cb_ReuseGUID.Checked = settings.ReuseOldGuid;
+            }
+            else
+                settings = new Settings();
         }
 
         public override void UpdateConnection(IOrganizationService newService, ConnectionDetail detail, string actionName, object parameter)
@@ -73,8 +79,8 @@ namespace DataRestorationTool
                 return;
             }
 
-            LoadAuditData((Tuple<int, string, string>)combo_Tables.SelectedItem, combo_Tables.SelectedValue);
             EnableControls(false);
+            LoadAuditData((Tuple<int, string, string>)combo_Tables.SelectedItem, combo_Tables.SelectedValue);
             dataGrid_Details.DataSource = null;
         }
 
@@ -97,14 +103,14 @@ namespace DataRestorationTool
             {
                 var checkBoxCell = (DataGridViewCheckBoxCell)dataGrid_DeletedRecords.Rows[e.RowIndex].Cells[0];
                 checkBoxCell.Value = checkBoxCell.Value is null ? true : !(bool)checkBoxCell.Value;
-                
+
                 if ((bool)checkBoxCell.Value)
                 {
                     tsb_RestoreData.Enabled = true;
                     return;
                 }
 
-                foreach(DataGridViewRow row in dataGrid_DeletedRecords.Rows)
+                foreach (DataGridViewRow row in dataGrid_DeletedRecords.Rows)
                 {
                     if (row.Cells[0].Value != null && (bool)row.Cells[0].Value)
                     {
@@ -115,6 +121,30 @@ namespace DataRestorationTool
 
                 tsb_RestoreData.Enabled = false;
             }
+        }
+
+        private void btn_SelectAll_Click(object sender, EventArgs e)
+        {
+            for (int c = 0; c < dataGrid_DeletedRecords.Rows.Count; c++)
+            {
+                var row = dataGrid_DeletedRecords.Rows[c];
+                var checkBoxCell = (DataGridViewCheckBoxCell)row.Cells[0];
+
+                checkBoxCell.Value = true;
+            }
+            tsb_RestoreData.Enabled = true;
+        }
+
+        private void btn_DeselectAll_Click(object sender, EventArgs e)
+        {
+            for (int c = 0; c < dataGrid_DeletedRecords.Rows.Count; c++)
+            {
+                var row = dataGrid_DeletedRecords.Rows[c];
+                var checkBoxCell = (DataGridViewCheckBoxCell)row.Cells[0];
+
+                checkBoxCell.Value = false;
+            }
+            tsb_RestoreData.Enabled = false;
         }
         #endregion
 
@@ -127,6 +157,8 @@ namespace DataRestorationTool
             dateTime_From.Enabled = enabled;
             dateTime_To.Enabled = enabled;
             tsb_LoadAudit.Enabled = enabled;
+            btn_SelectAll.Enabled = enabled;
+            btn_DeselectAll.Enabled = enabled;
         }
 
         private void LoadTableData()
@@ -258,9 +290,12 @@ namespace DataRestorationTool
 
         private void RestoreData()
         {
-            ExecuteMultipleResponse resp;
+            ExecuteMultipleResponse empResponse;
             bool byPassPlgn = cb_PlgnExec.Checked;
             bool byPassFlow = cb_PAFlow.Checked;
+            bool reuseGUID = cb_ReuseGUID.Checked;
+            bool contOnErr = cb_ContinueOnError.Checked;
+            List<string> errorList = new List<string>();
 
             WorkAsync(new WorkAsyncInfo
             {
@@ -278,54 +313,86 @@ namespace DataRestorationTool
 
                             if (checkBoxCell.Value != null && (bool)checkBoxCell.Value)
                             {
-                                var entityToCreate = ((AuditItem)row.DataBoundItem).AuditDetail.OldValue;
-                                entityToCreate.Attributes.Remove("statecode");
-                                entityToCreate.Attributes.Remove("statuscode");
-
-                                var req = new CreateRequest { Target = entityToCreate };
-
-                                if (byPassPlgn) req.Parameters.Add("BypassCustomPluginExecution", true);
-                                if (byPassFlow) req.Parameters.Add("SuppressCallbackRegistrationExpanderJob", true);
-
-                                emp.Requests.Add(req);
+                                emp.Requests.Add(BuildCreateRequest((AuditItem)row.DataBoundItem, reuseGUID, byPassPlgn, byPassFlow));
 
                                 if (emp.Requests.Count >= 250)
                                 {
-                                    resp = (ExecuteMultipleResponse)Service.Execute(emp);
+                                    empResponse = (ExecuteMultipleResponse)Service.Execute(emp);
 
-                                    if (resp.Responses.Count > 0)
-                                    {
-                                        throw new Exception(resp.Responses.First().Fault.Message);
-                                    }
+                                    errorList = HandleEMPReponse(empResponse.Responses, contOnErr, errorList);
 
                                     emp = IntializeExecuteMultipleRequest();
                                 }
                             }
                         }
 
-                        resp = (ExecuteMultipleResponse)Service.Execute(emp);
+                        empResponse = (ExecuteMultipleResponse)Service.Execute(emp);
 
-                        if (resp.Responses.Count > 0)
-                        {
-                            throw new Exception(resp.Responses.First().Fault.Message);
-                        }
+                        errorList = HandleEMPReponse(empResponse.Responses, contOnErr, errorList);
 
-                        e.Result = true;
+                        if (errorList.Count > 0)
+                            e.Result = errorList;
                     }
                     catch (Exception ex)
                     {
-                        ShowErrorDialog(ex, "Failed to Restore record(s)");
-                        e.Result = false;
+                        e.Result = ex;
                     }
                 },
                 PostWorkCallBack = e =>
                 {
-                    if ((bool)e.Result != false)
+                    if (e.Result is null)
                     {
                         MessageBox.Show("Record(s) restored succesfully!");
                     }
-                }, IsCancelable = true
+                    else if (e.Result.GetType() == typeof(Exception))
+                    {
+                        ShowErrorDialog((Exception)e.Result, "Failed to Restore record(s)", allownewissue: true);
+                    } else
+                    {
+                        LogInfo("Multiple errors have occurred while restoring the data");
+                        ((List<string>)e.Result).ForEach(r =>
+                        {
+                            LogError(r);
+                        });
+
+                        if (MessageBox.Show("Multiple errors have occurred while restoring the data. Do you wish to view the Log File?", "Confirmation", MessageBoxButtons.YesNo).ToString().ToUpper() == "YES")
+                            OpenLogFile();
+                    }
+                },
+                IsCancelable = true
             });
+        }
+
+        private CreateRequest BuildCreateRequest(AuditItem auditItem, bool reuseGuid, bool byPassPlgn, bool byPassFlow)
+        {
+            var eToCreate = auditItem.AuditDetail.OldValue;
+            eToCreate.Attributes.Remove("statecode");
+            eToCreate.Attributes.Remove("statuscode");
+
+            if (reuseGuid) eToCreate.Id = auditItem.RecordId;
+
+            var req = new CreateRequest { Target = eToCreate };
+
+            if (byPassPlgn) req.Parameters.Add("BypassCustomPluginExecution", true);
+            if (byPassFlow) req.Parameters.Add("SuppressCallbackRegistrationExpanderJob", true);
+
+            return req;
+        }
+
+        private List<string> HandleEMPReponse(ExecuteMultipleResponseItemCollection responses, bool contOnError, List<string> errorList)
+        {
+            if (responses.Count == 0)
+                return errorList;
+
+            if (!contOnError)
+            {
+                throw new Exception(responses.First().Fault.Message);
+            }
+
+            foreach (var resp in responses)
+                errorList.Add(resp.Fault.Message);
+
+            return errorList;
         }
 
         private ExecuteMultipleRequest IntializeExecuteMultipleRequest() =>
@@ -333,7 +400,7 @@ namespace DataRestorationTool
             {
                 Settings = new ExecuteMultipleSettings
                 {
-                    ContinueOnError = false,
+                    ContinueOnError = cb_ContinueOnError.Checked,
                     ReturnResponses = false,
                 },
                 Requests = new OrganizationRequestCollection(),
@@ -376,6 +443,23 @@ namespace DataRestorationTool
             query.Criteria.Conditions.Add(new ConditionExpression("objecttypecode", ConditionOperator.Equal, objectTypeCode));
             return query;
         }
-        #endregion   
+        #endregion
+
+        #region Overrides
+        public override void ClosingPlugin(PluginCloseInfo info)
+        {
+            settings.ByPassCustomPlugin = cb_PlgnExec.Checked;
+            settings.ByPassPAFlow = cb_PAFlow.Checked;
+            settings.ContinueOnError = cb_ContinueOnError.Checked;
+            settings.ReuseOldGuid = cb_ReuseGUID.Checked;
+
+            SettingsManager.Instance.Save(typeof(MyPlugin), settings);
+
+            if (!info.Silent && info.FormReason == CloseReason.None && info.ToolBoxReason != ToolBoxCloseReason.CloseAll && info.ToolBoxReason != ToolBoxCloseReason.CloseAllExceptActive)
+            {
+                info.Cancel = MessageBox.Show("Are you sure you want to close this tab?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes;
+            }
+        }
+        #endregion
     }
 }
