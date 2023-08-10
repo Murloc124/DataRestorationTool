@@ -73,7 +73,7 @@ namespace DataRestorationTool
                 MessageBox.Show("Please select a table from the list");
                 return;
             }
-            if (dateTime_From.Value > dateTime_To.Value)
+            if (!cb_RetrieveAll.Checked && dateTime_From.Value > dateTime_To.Value)
             {
                 MessageBox.Show("Please select a From Date earlier or equal to the To Date");
                 return;
@@ -146,6 +146,19 @@ namespace DataRestorationTool
             }
             tsb_RestoreData.Enabled = false;
         }
+
+        private void cb_RetrieveAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cb_RetrieveAll.Checked)
+            {
+                dateTime_From.Enabled = false;
+                dateTime_To.Enabled = false;
+            } else
+            {
+                dateTime_From.Enabled = true;
+                dateTime_To.Enabled = true;
+            }
+        }
         #endregion
 
         #region Logic
@@ -154,8 +167,9 @@ namespace DataRestorationTool
         private void EnableControls(bool enabled = true)
         {
             combo_Tables.Enabled = enabled;
-            dateTime_From.Enabled = enabled;
-            dateTime_To.Enabled = enabled;
+            cb_RetrieveAll.Enabled = enabled;
+            dateTime_From.Enabled = enabled && !cb_RetrieveAll.Checked;
+            dateTime_To.Enabled = enabled && !cb_RetrieveAll.Checked;
             tsb_LoadAudit.Enabled = enabled;
             btn_SelectAll.Enabled = enabled;
             btn_DeselectAll.Enabled = enabled;
@@ -443,8 +457,11 @@ namespace DataRestorationTool
             var query = new QueryExpression("audit");
             query.ColumnSet = new ColumnSet("auditid", "regardingobjectid", "createdon", "userid", "objectid", "objecttypecode", "action");
             query.Criteria.Conditions.Add(new ConditionExpression("operation", ConditionOperator.Equal, 3));
-            query.Criteria.Conditions.Add(new ConditionExpression("createdon", ConditionOperator.GreaterEqual, dateTime_From.Value.ToString("yyyy-MM-dd")));
-            query.Criteria.Conditions.Add(new ConditionExpression("createdon", ConditionOperator.LessThan, dateTime_To.Value.AddDays(1).ToString("yyyy-MM-dd")));
+            if (!cb_RetrieveAll.Checked)
+            {
+                query.Criteria.Conditions.Add(new ConditionExpression("createdon", ConditionOperator.GreaterEqual, dateTime_From.Value.ToString("yyyy-MM-dd")));
+                query.Criteria.Conditions.Add(new ConditionExpression("createdon", ConditionOperator.LessThan, dateTime_To.Value.AddDays(1).ToString("yyyy-MM-dd")));
+            }
             query.Criteria.Conditions.Add(new ConditionExpression("objecttypecode", ConditionOperator.Equal, objectTypeCode));
             return query;
         }
