@@ -67,6 +67,8 @@ namespace DataRestorationTool
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGrid_Details = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lbl_RetrieveAll = new System.Windows.Forms.Label();
+            this.cb_RetrieveAll = new System.Windows.Forms.CheckBox();
             this.tableDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletionDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletedByDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -168,6 +170,8 @@ namespace DataRestorationTool
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cb_RetrieveAll);
+            this.groupBox1.Controls.Add(this.lbl_RetrieveAll);
             this.groupBox1.Controls.Add(this.btn_DeselectAll);
             this.groupBox1.Controls.Add(this.btn_SelectAll);
             this.groupBox1.Controls.Add(this.label_Table);
@@ -494,6 +498,26 @@ namespace DataRestorationTool
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTip1.ToolTipTitle = "Advanced Settings Information";
             // 
+            // lbl_RetrieveAll
+            // 
+            this.lbl_RetrieveAll.AutoSize = true;
+            this.lbl_RetrieveAll.Location = new System.Drawing.Point(5, 40);
+            this.lbl_RetrieveAll.Name = "lbl_RetrieveAll";
+            this.lbl_RetrieveAll.Size = new System.Drawing.Size(104, 13);
+            this.lbl_RetrieveAll.TabIndex = 9;
+            this.lbl_RetrieveAll.Text = "Retrieve All Records";
+            // 
+            // cb_RetrieveAll
+            // 
+            this.cb_RetrieveAll.AutoSize = true;
+            this.cb_RetrieveAll.Enabled = false;
+            this.cb_RetrieveAll.Location = new System.Drawing.Point(110, 40);
+            this.cb_RetrieveAll.Name = "cb_RetrieveAll";
+            this.cb_RetrieveAll.Size = new System.Drawing.Size(15, 14);
+            this.cb_RetrieveAll.TabIndex = 10;
+            this.cb_RetrieveAll.UseVisualStyleBackColor = true;
+            this.cb_RetrieveAll.CheckedChanged += new System.EventHandler(this.cb_RetrieveAll_CheckedChanged);
+            // 
             // tableDataGridViewTextBoxColumn
             // 
             this.tableDataGridViewTextBoxColumn.DataPropertyName = "Table";
@@ -626,5 +650,7 @@ namespace DataRestorationTool
         private System.Windows.Forms.CheckBox cb_ContinueOnError;
         private ToolTip toolTip1;
         private PictureBox pb_Tooltip;
+        private Label lbl_RetrieveAll;
+        private CheckBox cb_RetrieveAll;
     }
 }
