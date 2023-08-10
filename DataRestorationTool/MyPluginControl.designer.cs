@@ -54,6 +54,7 @@ namespace DataRestorationTool
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewLinkColumn();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.pb_Tooltip = new System.Windows.Forms.PictureBox();
             this.cb_ContinueOnError = new System.Windows.Forms.CheckBox();
             this.lbl_ContinueOnError = new System.Windows.Forms.Label();
             this.cb_ReuseGUID = new System.Windows.Forms.CheckBox();
@@ -65,6 +66,7 @@ namespace DataRestorationTool
             this.lbl_AdvSettings = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGrid_Details = new System.Windows.Forms.DataGridView();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletionDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletedByDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -81,6 +83,7 @@ namespace DataRestorationTool
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Tooltip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -328,6 +331,7 @@ namespace DataRestorationTool
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.pb_Tooltip);
             this.groupBox3.Controls.Add(this.cb_ContinueOnError);
             this.groupBox3.Controls.Add(this.lbl_ContinueOnError);
             this.groupBox3.Controls.Add(this.cb_ReuseGUID);
@@ -344,6 +348,18 @@ namespace DataRestorationTool
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             // 
+            // pb_Tooltip
+            // 
+            this.pb_Tooltip.Image = global::DataRestorationTool.Properties.Resources.info;
+            this.pb_Tooltip.InitialImage = global::DataRestorationTool.Properties.Resources.info;
+            this.pb_Tooltip.Location = new System.Drawing.Point(153, 14);
+            this.pb_Tooltip.Name = "pb_Tooltip";
+            this.pb_Tooltip.Size = new System.Drawing.Size(17, 17);
+            this.pb_Tooltip.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_Tooltip.TabIndex = 9;
+            this.pb_Tooltip.TabStop = false;
+            this.toolTip1.SetToolTip(this.pb_Tooltip, resources.GetString("pb_Tooltip.ToolTip"));
+            // 
             // cb_ContinueOnError
             // 
             this.cb_ContinueOnError.AutoSize = true;
@@ -358,9 +374,9 @@ namespace DataRestorationTool
             this.lbl_ContinueOnError.AutoSize = true;
             this.lbl_ContinueOnError.Location = new System.Drawing.Point(205, 65);
             this.lbl_ContinueOnError.Name = "lbl_ContinueOnError";
-            this.lbl_ContinueOnError.Size = new System.Drawing.Size(88, 13);
+            this.lbl_ContinueOnError.Size = new System.Drawing.Size(89, 13);
             this.lbl_ContinueOnError.TabIndex = 7;
-            this.lbl_ContinueOnError.Text = "Continue on error";
+            this.lbl_ContinueOnError.Text = "Continue on Error";
             // 
             // cb_ReuseGUID
             // 
@@ -471,6 +487,13 @@ namespace DataRestorationTool
             this.dataGrid_Details.Size = new System.Drawing.Size(598, 499);
             this.dataGrid_Details.TabIndex = 10;
             // 
+            // toolTip1
+            // 
+            this.toolTip1.IsBalloon = true;
+            this.toolTip1.Tag = "";
+            this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.toolTip1.ToolTipTitle = "Advanced Settings Information";
+            // 
             // tableDataGridViewTextBoxColumn
             // 
             this.tableDataGridViewTextBoxColumn.DataPropertyName = "Table";
@@ -547,6 +570,7 @@ namespace DataRestorationTool
             this.splitContainer1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Tooltip)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -600,5 +624,7 @@ namespace DataRestorationTool
         private System.Windows.Forms.CheckBox cb_ReuseGUID;
         private System.Windows.Forms.Label lbl_ContinueOnError;
         private System.Windows.Forms.CheckBox cb_ContinueOnError;
+        private ToolTip toolTip1;
+        private PictureBox pb_Tooltip;
     }
 }
