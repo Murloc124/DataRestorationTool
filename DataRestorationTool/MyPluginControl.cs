@@ -225,12 +225,14 @@ namespace DataRestorationTool
                             Table = (item["objectid"] as EntityReference).LogicalName,
                             RecordId = (item["objectid"] as EntityReference).Id,
                             Metadata = tableMetaDataList.FirstOrDefault(_ => _.ObjectTypeCode == selectedTable.Item1),
-                            Name = selectedTable.Item3 != null && auditDetail.OldValue.Contains(selectedTable.Item3) ? auditDetail.OldValue[selectedTable.Item3].ToString() : null,
+                            Name = selectedTable.Item3 != null && auditDetail.OldValue.Contains(selectedTable.Item3) ? auditDetail.OldValue[selectedTable.Item3].ToString() : "[EMPTY NAME]",
                         });
+                        w.ReportProgress(-1, $"Loaded {result.Count} / {queryResult.Count} records..");
                     }
 
                     e.Result = result.OrderByDescending(_ => _.DeletionDate).ToList();
                 },
+                ProgressChanged = e => SetWorkingMessage(e.UserState.ToString()),
                 PostWorkCallBack = e =>
                 {
                     if (((List<AuditItem>)e.Result).Count == 0)
@@ -305,6 +307,7 @@ namespace DataRestorationTool
                     try
                     {
                         var emp = IntializeExecuteMultipleRequest();
+                        var restoredRecordCount = 0;
 
                         for (int c = 0; c < dataGrid_DeletedRecords.Rows.Count; c++)
                         {
@@ -323,6 +326,7 @@ namespace DataRestorationTool
 
                                     emp = IntializeExecuteMultipleRequest();
                                 }
+                                w.ReportProgress(-1, $"Restoring {++restoredRecordCount} Records..");
                             }
                         }
 
@@ -338,6 +342,7 @@ namespace DataRestorationTool
                         e.Result = ex;
                     }
                 },
+                ProgressChanged = e => SetWorkingMessage($"Restoring Deleted Data..\n{e.UserState}"),
                 PostWorkCallBack = e =>
                 {
                     if (e.Result is null)
