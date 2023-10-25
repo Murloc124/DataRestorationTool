@@ -41,6 +41,8 @@ namespace DataRestorationTool
             this.combo_Tables = new System.Windows.Forms.ComboBox();
             this.label_Table = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cb_RetrieveAll = new System.Windows.Forms.CheckBox();
+            this.lbl_RetrieveAll = new System.Windows.Forms.Label();
             this.btn_DeselectAll = new System.Windows.Forms.Button();
             this.btn_SelectAll = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -67,8 +69,6 @@ namespace DataRestorationTool
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGrid_Details = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.lbl_RetrieveAll = new System.Windows.Forms.Label();
-            this.cb_RetrieveAll = new System.Windows.Forms.CheckBox();
             this.tableDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletionDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deletedByDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -184,6 +184,26 @@ namespace DataRestorationTool
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             // 
+            // cb_RetrieveAll
+            // 
+            this.cb_RetrieveAll.AutoSize = true;
+            this.cb_RetrieveAll.Enabled = false;
+            this.cb_RetrieveAll.Location = new System.Drawing.Point(110, 40);
+            this.cb_RetrieveAll.Name = "cb_RetrieveAll";
+            this.cb_RetrieveAll.Size = new System.Drawing.Size(15, 14);
+            this.cb_RetrieveAll.TabIndex = 10;
+            this.cb_RetrieveAll.UseVisualStyleBackColor = true;
+            this.cb_RetrieveAll.CheckedChanged += new System.EventHandler(this.cb_RetrieveAll_CheckedChanged);
+            // 
+            // lbl_RetrieveAll
+            // 
+            this.lbl_RetrieveAll.AutoSize = true;
+            this.lbl_RetrieveAll.Location = new System.Drawing.Point(5, 40);
+            this.lbl_RetrieveAll.Name = "lbl_RetrieveAll";
+            this.lbl_RetrieveAll.Size = new System.Drawing.Size(104, 13);
+            this.lbl_RetrieveAll.TabIndex = 9;
+            this.lbl_RetrieveAll.Text = "Retrieve All Records";
+            // 
             // btn_DeselectAll
             // 
             this.btn_DeselectAll.Enabled = false;
@@ -288,7 +308,7 @@ namespace DataRestorationTool
             this.dataGrid_DeletedRecords.ReadOnly = true;
             this.dataGrid_DeletedRecords.RowHeadersVisible = false;
             this.dataGrid_DeletedRecords.RowHeadersWidth = 102;
-            this.dataGrid_DeletedRecords.Size = new System.Drawing.Size(610, 499);
+            this.dataGrid_DeletedRecords.Size = new System.Drawing.Size(610, 510);
             this.dataGrid_DeletedRecords.TabIndex = 9;
             this.dataGrid_DeletedRecords.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_DeletedRecords_CellContentClick);
             // 
@@ -314,7 +334,7 @@ namespace DataRestorationTool
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 31);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -328,8 +348,8 @@ namespace DataRestorationTool
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1212, 600);
-            this.splitContainer1.SplitterDistance = 99;
+            this.splitContainer1.Size = new System.Drawing.Size(1212, 612);
+            this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 10;
             // 
@@ -466,7 +486,7 @@ namespace DataRestorationTool
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dataGrid_Details);
-            this.splitContainer2.Size = new System.Drawing.Size(1212, 499);
+            this.splitContainer2.Size = new System.Drawing.Size(1212, 510);
             this.splitContainer2.SplitterDistance = 610;
             this.splitContainer2.TabIndex = 11;
             // 
@@ -488,7 +508,7 @@ namespace DataRestorationTool
             this.dataGrid_Details.ReadOnly = true;
             this.dataGrid_Details.RowHeadersVisible = false;
             this.dataGrid_Details.RowHeadersWidth = 102;
-            this.dataGrid_Details.Size = new System.Drawing.Size(598, 499);
+            this.dataGrid_Details.Size = new System.Drawing.Size(598, 510);
             this.dataGrid_Details.TabIndex = 10;
             // 
             // toolTip1
@@ -497,26 +517,6 @@ namespace DataRestorationTool
             this.toolTip1.Tag = "";
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTip1.ToolTipTitle = "Advanced Settings Information";
-            // 
-            // lbl_RetrieveAll
-            // 
-            this.lbl_RetrieveAll.AutoSize = true;
-            this.lbl_RetrieveAll.Location = new System.Drawing.Point(5, 40);
-            this.lbl_RetrieveAll.Name = "lbl_RetrieveAll";
-            this.lbl_RetrieveAll.Size = new System.Drawing.Size(104, 13);
-            this.lbl_RetrieveAll.TabIndex = 9;
-            this.lbl_RetrieveAll.Text = "Retrieve All Records";
-            // 
-            // cb_RetrieveAll
-            // 
-            this.cb_RetrieveAll.AutoSize = true;
-            this.cb_RetrieveAll.Enabled = false;
-            this.cb_RetrieveAll.Location = new System.Drawing.Point(110, 40);
-            this.cb_RetrieveAll.Name = "cb_RetrieveAll";
-            this.cb_RetrieveAll.Size = new System.Drawing.Size(15, 14);
-            this.cb_RetrieveAll.TabIndex = 10;
-            this.cb_RetrieveAll.UseVisualStyleBackColor = true;
-            this.cb_RetrieveAll.CheckedChanged += new System.EventHandler(this.cb_RetrieveAll_CheckedChanged);
             // 
             // tableDataGridViewTextBoxColumn
             // 

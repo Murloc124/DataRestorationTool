@@ -207,6 +207,8 @@ namespace DataRestorationTool
                     combo_Tables.ValueMember = "Item1";
 
                     EnableControls();
+                    btn_SelectAll.Enabled = false;
+                    btn_DeselectAll.Enabled = false;
                 },
                 IsCancelable = false, AsyncArgument = null
             });
@@ -249,15 +251,17 @@ namespace DataRestorationTool
                 ProgressChanged = e => SetWorkingMessage(e.UserState.ToString()),
                 PostWorkCallBack = e =>
                 {
+                    EnableControls();
+
                     if (((List<AuditItem>)e.Result).Count == 0)
                     {
                         MessageBox.Show($"No deleted records for table {selectedTable.Item2} during the selected period.");
                         dataGrid_DeletedRecords.DataSource = null;
+                        btn_SelectAll.Enabled = false;
+                        btn_DeselectAll.Enabled = false;
                     }
                     else
                         dataGrid_DeletedRecords.DataSource = e.Result;
-
-                    EnableControls();
                 },
                 AsyncArgument = null,
                 IsCancelable = true,
