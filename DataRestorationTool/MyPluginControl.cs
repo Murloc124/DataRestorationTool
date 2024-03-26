@@ -334,6 +334,7 @@ namespace DataRestorationTool
 
                             if (checkBoxCell.Value != null && (bool)checkBoxCell.Value)
                             {
+                                // TODO: Implement some kind of validation on related records?
                                 emp.Requests.Add(BuildCreateRequest((AuditItem)row.DataBoundItem, reuseGUID, byPassPlgn, byPassFlow));
 
                                 if (emp.Requests.Count >= 250)
@@ -418,6 +419,7 @@ namespace DataRestorationTool
             return errorList;
         }
 
+        // TODO: Rewrite to CreateMultipleRequest
         private ExecuteMultipleRequest IntializeExecuteMultipleRequest() =>
             new ExecuteMultipleRequest
             {
@@ -429,6 +431,7 @@ namespace DataRestorationTool
                 Requests = new OrganizationRequestCollection(),
             };
 
+        // TODO: Rewrite to use CreateMultipleRequest
         private List<Entity> ExecutePagedQuery(QueryExpression q)
         {
             int pageNumber = 1;
